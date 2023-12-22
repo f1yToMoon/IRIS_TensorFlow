@@ -13,3 +13,9 @@ stages:
     - src/train.py
     params:
     - train.epochs
+metrics:
+- custom_dir/metrics.json
+- plots/metrics.json
+plots:
+- plots/plots/metrics:
+    x: step

@@ -6,6 +6,8 @@ import yaml
 
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
+from dvclive.keras import DVCLiveCallback
+from dvclive import Live
 
 if len(sys.argv) != 2:
     sys.stderr.write('Arguments error. Usage:\n')
@@ -48,6 +50,13 @@ model.compile(optimizer='adam',
               loss=keras.losses.CategoricalCrossentropy(),
              metrics=['accuracy'])
 
-history = model.fit(X_train, y_train, epochs=epochs, validation_data=(X_test, y_test), verbose=1)
+from dvclive import Live
+from dvclive.keras import DVCLiveCallback
 
-model.evaluate(X_test, y_test)
+with Live("custom_dir") as live:
+    history = model.fit(X_train, y_train, epochs=30, validation_data=(X_test, y_test), verbose=1, callbacks=[DVCLiveCallback(live=live)])
+
+    # Log additional data after training
+    test_loss, test_acc = model.evaluate(X_test, y_test)
+    live.log_metric("test_loss", test_loss, plot=False)
+    live.log_metric("test_acc", test_acc, plot=False)
