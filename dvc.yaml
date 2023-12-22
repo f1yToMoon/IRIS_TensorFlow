@@ -14,8 +14,10 @@ stages:
     params:
     - train.epochs
 metrics:
-- custom_dir/metrics.json
 - plots/metrics.json
+- custom_dir/metrics.json
 plots:
 - plots/plots/metrics:
+    x: step
+- custom_dir/plots/metrics:
     x: step
