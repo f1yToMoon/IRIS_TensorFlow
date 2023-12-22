@@ -1,0 +1,30 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: C:/Users/CONDA/python.exe src/prepare.py
+    deps:
+    - path: src/prepare.py
+      hash: md5
+      md5: b0d6cea9130a7d723076df7d2e4f811c
+      size: 822
+    outs:
+    - path: data
+      hash: md5
+      md5: 55b36dcf708649042fe013d443ab28b0.dir
+      size: 5200
+      nfiles: 4
+  train:
+    cmd: C:/Users/CONDA/python.exe src/train.py data
+    deps:
+    - path: data
+      hash: md5
+      md5: 55b36dcf708649042fe013d443ab28b0.dir
+      size: 5200
+      nfiles: 4
+    - path: src/train.py
+      hash: md5
+      md5: ade483436b72dc153cc4fb0dc10c807e
+      size: 1487
+    params:
+      params.yaml:
+        train.epochs: 30
